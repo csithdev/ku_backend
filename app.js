@@ -5,6 +5,7 @@ import express from 'express';
 import logger from 'morgan';
 import sassMiddleware from 'node-sass-middleware';
 import path from 'path';
+import mongoose from 'mongoose';
 // import favicon from 'serve-favicon';
 
 import index from './routes/index';
@@ -12,11 +13,19 @@ import v1 from './routes/v1';
 
 const app = express();
 const debug = Debug('ku-backend:app');
+mongoose.connect('mongodb://localhost/ku_teaching', { promiseLibrary: global.Promise });
+const allowCrossDomain = (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+};
 app.set('views', path.join(__dirname, 'views'));
 // view engine setup
 app.set('view engine', 'pug');
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(allowCrossDomain);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

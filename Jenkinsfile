@@ -6,6 +6,7 @@ pipeline {
   }
   tools {
     nodejs 'Node_8.9'
+    docker 'docker'
   }
   stages {
     stage('Checkout Code') {

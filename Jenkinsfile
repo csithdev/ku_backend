@@ -3,11 +3,7 @@ pipeline {
     node { 
       label 'docker'
     }
-  }
-  tools {
-    nodejs 'nodejs'
-  }
- 
+  } 
   stages {
     stage ('Checkout Code') {
       steps {
